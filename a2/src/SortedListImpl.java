@@ -4,9 +4,14 @@ import java.util.LinkedList;
 /**
  * Created by jpp on 10/02/16.
  */
-public class SortedListImpl implements SortedList {
+public class SortedListImpl<E> implements SortedList {
 
-    LinkedList<Comparable> list;
+    public LinkedList<Comparable> list;
+
+    public SortedListImpl() {
+        super();
+        list = new LinkedList<Comparable>();
+    }
 
     @Override
     public void add(Comparable elem) {
@@ -14,8 +19,35 @@ public class SortedListImpl implements SortedList {
         {
             list.add(elem);
         }
+        else {
+            list.add(bSearchPlace(0, list.size()-1, elem), elem);
+        }
+    }
 
+    public int bSearchPlace(int min, int max, Comparable elem)
+    {
+        int midpoint = min + ((max - min) / 2);
 
+        if (min >= max) {
+            int comp = elem.compareTo(list.get(min));
+            if(comp < 0){// elem < min
+                return min;
+            }
+            else if(comp > 0){ //elem > min
+                return min+1;
+            }
+        }
+
+        int comp = elem.compareTo(list.get(midpoint));
+        if(comp < 0) {//element is smaller than midpoint
+            return bSearchPlace(min, midpoint - 1, elem);//Search below the midpoint
+        }
+        else if(comp > 0) {// element is larger than midpoint
+            return bSearchPlace(midpoint + 1, max, elem);//Search above the midpoint
+        }
+        else { // element is found
+            return midpoint;
+        }
     }
 
     @Override
@@ -25,7 +57,7 @@ public class SortedListImpl implements SortedList {
 
     @Override
     public Comparable get(int ix) {
-        return null;
+        return list.get(ix);
     }
 
     @Override
@@ -35,7 +67,7 @@ public class SortedListImpl implements SortedList {
 
     @Override
     public int lastIndex(Comparable elem) {
-        return 0;
+        return list.size();
     }
 
     @Override
@@ -50,6 +82,6 @@ public class SortedListImpl implements SortedList {
 
     @Override
     public int size() {
-        return 0;
+        return list.size();
     }
 }
