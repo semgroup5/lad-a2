@@ -26,6 +26,15 @@ public class Node {
         // Add its child nodes to the end of the list in the correct order
 
         // Repeat from step 2 until all nodes have been processed
+
+        s.add(n);
+
+        while(!s.isEmpty()){
+            Node current = s.pop();
+            if(current.left != null) s.addLast(current.left);
+            if(current.right != null) s.addLast(current.right);
+            System.out.print(current.element + " ");
+        }
     }
     
     public static void main(String[] args){
