@@ -10,6 +10,11 @@ public class SortedListImpl implements SortedList {
 
     @Override
     public void add(Comparable elem) {
+        if(list.isEmpty())
+        {
+            list.add(elem);
+        }
+
 
     }
 
