@@ -36,7 +36,7 @@ public class Node {
             System.out.print(current.element + " ");
         }
     }
-    
+
     public static void main(String[] args){
         //level 3
         Node n6   = new Node(null, 6, null);
@@ -58,5 +58,6 @@ public class Node {
         
         System.out.println("Your result:");
         printBF(root);
+
     }   
 }

@@ -69,7 +69,9 @@ public class SortedListImpl<E> implements SortedList {
 
     @Override
     public void addSortedArray(Comparable[] arr) {
-
+        for(int i = 0; i < arr.length; i++){
+            add(arr[i]);
+        }
     }
 
     @Override
