@@ -1,52 +1,69 @@
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-
 /**
  * Created by jpp on 10/02/16.
  */
 public class SortedListImpl<E> implements SortedList {
 
-    public LinkedList<Comparable> list;
+    public Comparable[] list;
+    public int count;
 
     public SortedListImpl() {
         super();
-        list = new LinkedList<Comparable>();
+        list = new Comparable[5];
+        count = 0;
     }
 
     @Override
     public void add(Comparable elem) {
-        if(list.isEmpty())
+        if(count + 1 > list.length)
         {
-            list.add(elem);
+            Comparable[] oldList = list;
+            list = new Comparable[oldList.length * 2];
+            for(int i = 0; i < count; i++)
+            {
+                list[i] = oldList[i];
+            }
+        }
+
+        if(count == 0)
+        {
+            list[count] = elem;
+            count++;
         }
         else {
-            list.add(bSearchPlace(0, list.size()-1, elem), elem);
+            int placement = bSearch(0, count-1, elem);
+
+            if(placement < count) {
+                for(int i = count-1; i >= placement; i--) {
+                    list[i+1] = list[i];
+                }
+            }
+
+            list[placement] = elem;
+            count++;
         }
     }
 
-    public int bSearchPlace(int min, int max, Comparable elem)
+    public int bSearch(int min, int max, Comparable elem)
     {
         int midpoint = min + ((max - min) / 2);
-
-        if (min >= max) {
-            int comp = elem.compareTo(list.get(min));
-            if(comp < 0){// elem < min
-                return min;
+        if (min < max)
+        {
+            int comp = elem.compareTo(list[midpoint]);
+            if(comp < 0) {//element is smaller than midpoint
+                return bSearch(min, midpoint - 1, elem);//Search below the midpoint
             }
-            else if(comp > 0){ //elem > min
-                return min+1;
+            else if(comp > 0) {// element is larger than midpoint
+                return bSearch(midpoint + 1, max, elem);//Search above the midpoint
+            }
+            else { // element is found
+                return midpoint;
             }
         }
-
-        int comp = elem.compareTo(list.get(midpoint));
-        if(comp < 0) {//element is smaller than midpoint
-            return bSearchPlace(min, midpoint - 1, elem);//Search below the midpoint
-        }
-        else if(comp > 0) {// element is larger than midpoint
-            return bSearchPlace(midpoint + 1, max, elem);//Search above the midpoint
-        }
-        else { // element is found
-            return midpoint;
+        else
+        {
+            if(elem.compareTo(list[midpoint]) > 0) //if element is larger than min
+                return min+1; //prevents error when appending onto the array
+            return min;
         }
     }
 
@@ -57,17 +74,18 @@ public class SortedListImpl<E> implements SortedList {
 
     @Override
     public Comparable get(int ix) {
-        return list.get(ix);
+        return list[ix];
     }
 
     @Override
     public int firstIndex(Comparable elem) {
-        return 0;
+        return bSearch(0, count-1, elem);
     }
 
     @Override
     public int lastIndex(Comparable elem) {
-        return list.size();
+
+        return 0;
     }
 
     @Override
@@ -82,6 +100,17 @@ public class SortedListImpl<E> implements SortedList {
 
     @Override
     public int size() {
-        return list.size();
+        return count;
+    }
+
+    public String toString()
+    {
+        String result = "";
+        for (int i = 0; i < count; i++)
+        {
+            result += list[i] + " ";
+        }
+
+        return result ;
     }
 }
