@@ -76,7 +76,7 @@ public class SortedListImpl<E> implements SortedList {
         j = 0;
         current = 0;
 
-        while(i < list.length && j < arr.length){
+        while(i < count && j < arr.length){
             if(list[i].compareTo(arr[j]) == -1){
                 newList[current] = list[i];
                 i++;
@@ -87,7 +87,7 @@ public class SortedListImpl<E> implements SortedList {
             current++;
         }
 
-        while(i < list.length){
+        while(i < count){
             newList[current] = list[i];
             i++;
             current++;
