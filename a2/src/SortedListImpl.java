@@ -69,9 +69,36 @@ public class SortedListImpl<E> implements SortedList {
 
     @Override
     public void addSortedArray(Comparable[] arr) {
-        for(int i = 0; i < arr.length; i++){
-            add(arr[i]);
+        int size = this.list.length + arr.length;
+        Comparable[] newList = new Comparable[size];
+        int i, j, current;
+        i = 0;
+        j = 0;
+        current = 0;
+
+        while(i < list.length && j < arr.length){
+            if(list[i].compareTo(arr[j]) == -1){
+                newList[current] = list[i];
+                i++;
+            }else{
+                newList[current] = arr[j];
+                j++;
+            }
+            current++;
         }
+
+        while(i < list.length){
+            newList[current] = list[i];
+            i++;
+            current++;
+        }
+
+        while(j < arr.length){
+            newList[current] = arr[j];
+            j++;
+            current++;
+        }
+        list = newList;
     }
 
     @Override
