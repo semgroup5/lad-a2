@@ -149,19 +149,28 @@ public class SortedListImpl<E> implements SortedList {
     @Override
     public int countBetween(Comparable lo, Comparable hi) {
         int c = 0;
-        int indexLo = 0;
-        int indexHi = 0;
-        if (lo.compareTo(hi) == 0) {
-            for(int i = 0; i < count-1; i++){
-                if(list[i].compareTo(lo) == 0) c++;
-            }
+//        int indexLo = 0;
+//        int indexHi = 0;
+//        if (lo.compareTo(hi) == 0) {
+//            for(int i = 0; i < count-1; i++){
+//                if(list[i].compareTo(lo) == 0) c++;
+//            }
+//            return c;
+//        }
+//        else {
+//            indexLo = bSearch(0, count - 1, lo);
+//            indexHi = bSearch(indexLo, count - 1, hi);
+//            return indexHi - indexLo;
+//        }
+        int first = firstIndex(lo);
+        int second = firstIndex(hi);
+        if (first == second){
+            second = lastIndex(hi);
+            //due to it being inclusive: "The number of elements x such that lo <= x <= hi" we add +1
+            c = second - first +1;
             return c;
         }
-        else {
-            indexLo = bSearch(0, count - 1, lo);
-            indexHi = bSearch(indexLo, count - 1, hi);
-            return indexHi - indexLo;
-        }
+        else return c = second - first;
 
     }
 
