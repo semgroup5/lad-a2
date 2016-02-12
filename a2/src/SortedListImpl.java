@@ -115,8 +115,27 @@ public class SortedListImpl<E> implements SortedList {
 
     @Override
     public int lastIndex(Comparable elem) {
+        int low = 0;
+        int high = count - 1;
+        int found = -1;
 
-        return 0;
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            int midVal = list[mid].compareTo(elem);
+
+            if (midVal < 0) {
+                low = mid + 1;
+            } else if (midVal > 0) {
+                high = mid - 1;
+            } else {
+                found = mid;
+                // For last occurrence:
+                low = mid + 1;
+                // For first occurrence:
+                // high = mid - 1;
+            }
+        }
+        return found;
     }
 
     @Override
