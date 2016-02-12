@@ -134,6 +134,9 @@ public class SortedListImpl<E> implements SortedList {
                 // For first occurrence:
                 // high = mid - 1;
             }
+
+            if(found == -1 && midVal < 0) //if element is smaller than mid
+                return high;
         }
         return found;
     }
