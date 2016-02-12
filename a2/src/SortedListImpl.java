@@ -143,7 +143,7 @@ public class SortedListImpl<E> implements SortedList {
 
     @Override
     public boolean contains(Comparable elem) {
-        return false;
+       return list[bSearch(0, count-1, elem)] == elem;
     }
 
     @Override
