@@ -9,7 +9,7 @@
  * @param <E> The type of elements stored in the list. E needs to be a subclass of Comparable, so the elements can be ordered
  */
 public interface SortedList<E extends Comparable<E>> {
-// Hint: See TestList.java for some examples of usage and expected results (use it to test your code).
+// Hint: See TestList.java for some examples of usage and expected results (use it to Task3 your code).
 // Hint: Comparable: https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html
 // Hint: You need to have a type parameter <E extends Comparable<E>> in your implementing class, and implement SortedList<E>.
 // Hint: To create an array of type E[], use E[] arr = (E[]) new Comparable[arraysize];
@@ -25,7 +25,7 @@ public interface SortedList<E extends Comparable<E>> {
     /**
      * Add all elements of a given array to the list
      * Complexity at most O(N+M), where N is size() and M is arr.length
-     * @param arr A sorted array of elements
+     * @param arr A sorted array of elements´\
      **/
     public void addSortedArray(E[] arr);
     // Hint: Look for 'merge algorithms'

@@ -115,30 +115,18 @@ public class SortedListImpl<E> implements SortedList {
 
     @Override
     public int lastIndex(Comparable elem) {
-        int low = 0;
-        int high = count - 1;
-        int found = -1;
-
-        while (low <= high) {
-            int mid = (low + high) >>> 1;
-            int midVal = list[mid].compareTo(elem);
-
-            if (midVal < 0) {
-                low = mid + 1;
-            } else if (midVal > 0) {
-                high = mid - 1;
-            } else {
-                found = mid;
-                // For last occurrence:
-                low = mid + 1;
-                // For first occurrence:
-                // high = mid - 1;
+       int first = firstIndex(elem);
+        if (first == count){
+            return count -1;
+        } else if (elem != list[first] ) {
+            return first - 1;
+        } else if (elem.compareTo(list[first]) == 0){
+            while (elem == list[first+1] && first+1 < count ) {
+                first++;
             }
 
-            if(found == -1 && midVal < 0) //if element is smaller than mid
-                return high;
         }
-        return found;
+        return first;
     }
 
     @Override
@@ -148,7 +136,10 @@ public class SortedListImpl<E> implements SortedList {
 
     @Override
     public int countBetween(Comparable lo, Comparable hi) {
-        int c;
+        int c = 0;
+
+
+
 
         int first = firstIndex(lo);
         int second = firstIndex(hi);
@@ -158,7 +149,7 @@ public class SortedListImpl<E> implements SortedList {
             c = second - first +1;
             return c;
         }
-        else return  second - first;
+        else return c = second - first;
 
     }
 

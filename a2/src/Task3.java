@@ -40,14 +40,14 @@ public class Task3 {
 
 	public static void main(String[] args) {
 
-        for (int j = 0; j < 20; j++) {
+        for (int j = 0; j < 40; j++) {
+
             int[] a = new int[(int) (Math.random()*10001+20001)];
+
             for (int i = 0; i< a.length; i++){
                 a[i]= (int) (Math.random()*1000000000);
             }
-
             int [] b = a.clone();
-
             insertion(a);
             sort(b);
         }

@@ -47,7 +47,7 @@ In the interface file there are comments describing the methods, some complexity
 requirements and some hints and challenges. You are also given TestList.java,
 containing a method using the interface and some comments containing the expected
 output of running the program with your implementation. Use this to
-test your implementation and to understand how it is expected to work.
+Task3 your implementation and to understand how it is expected to work.
 You should analyse the time-complexity of your implementation. For each
 method the interface provides you should state which complexity class the
 method is in and motivate your claim in terms of your code. Include relevant
@@ -96,7 +96,7 @@ with the built-in sorting method for int arrays in Java, which is Arrays.sort
 from package java.util. Run each sorting functions on a number of arrays
 of different sizes. Make a program that automatically runs the two methods
 a large number of times. Use as large values as possible without using too
-much time or memory. The arrays you test with should contain random
+much time or memory. The arrays you Task3 with should contain random
 values. Plot the running times in a diagram.
 e) Any guesses at what the running time of the built-in sorting method is?
 You should submit a) a Java program (.java file) with the code that runs the
