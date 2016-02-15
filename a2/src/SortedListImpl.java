@@ -76,7 +76,7 @@ public class SortedListImpl<E> implements SortedList {
             if(elem.compareTo(list[midpoint]) > 0) //if element is larger than min
                 return min+1; //prevents error when appending onto the array
             return min;
-            //
+
         }
     }
 
