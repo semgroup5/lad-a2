@@ -138,9 +138,13 @@ public class SortedListImpl<E> implements SortedList {
     public int lastIndex(Comparable elem) {
        int first = firstIndex(elem);
         if (first == count){
-            return count -1;
+            // if the index of the search result is equal to count(there is no larger element in the array)
+            // return the last index which contain an object
+            return count - 1;
         } else if (elem != list[first] ) {
             return first - 1;
+            // if there are more than one elem which are equal to the new elem
+            // loop until it finds the last index of the same elem
         } else if (elem.compareTo(list[first]) == 0){
             while (elem == list[first+1] && first+1 < count ) {
                 first++;
