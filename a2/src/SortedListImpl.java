@@ -4,6 +4,7 @@
 public class SortedListImpl<E> implements SortedList {
 
     public Comparable[] list;
+    //variable to keep track of how many elements the list actually has.
     public int count;
 
 
@@ -164,10 +165,6 @@ public class SortedListImpl<E> implements SortedList {
     @Override
     public int countBetween(Comparable lo, Comparable hi) {
         int c = 0;
-
-
-
-
         int first = firstIndex(lo);
         int second = firstIndex(hi);
         if (first == second){
@@ -182,6 +179,7 @@ public class SortedListImpl<E> implements SortedList {
 
 
     @Override
+    //returning the value of count which is the current list size
     public int size() {
         return count;
     }
