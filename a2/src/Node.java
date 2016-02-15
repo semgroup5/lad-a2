@@ -27,12 +27,17 @@ public class Node {
 
         // Repeat from step 2 until all nodes have been processed
 
+        //adding the root to the LinkedList.
         s.add(n);
 
+        //Loop while List is not empty
         while(!s.isEmpty()){
+            //Assign element to new variable and pop it from the list.
             Node current = s.pop();
+            //If children is not null add it to the end of the list
             if(current.left != null) s.addLast(current.left);
             if(current.right != null) s.addLast(current.right);
+            //Print popped element
             System.out.print(current.element + " ");
         }
     }
