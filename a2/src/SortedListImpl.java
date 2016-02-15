@@ -1,5 +1,5 @@
 /**
- * Created by jpp on 10/02/16.
+ * Created by G05 on 10/02/16.
  */
 public class SortedListImpl<E> implements SortedList {
 
