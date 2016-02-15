@@ -6,38 +6,47 @@ public class SortedListImpl<E> implements SortedList {
     public Comparable[] list;
     public int count;
 
+
     public SortedListImpl() {
         super();
+        //Creating a new comparable list with 5 objects
         list = new Comparable[5];
+        //Assign the count from 0.
         count = 0;
     }
 
     @Override
+    //
     public void add(Comparable elem) {
+        //checking if the list will go over the limits of the old list
         if(count + 1 > list.length)
         {
             Comparable[] oldList = list;
+            //double the length from the old list and make a new list
             list = new Comparable[oldList.length * 2];
+            //adding the objects in the old list to the new list
             for(int i = 0; i < count; i++)
             {
                 list[i] = oldList[i];
             }
         }
-
+            //If there is nothing in the list just add the new elem in the list
         if(count == 0)
         {
             list[count] = elem;
             count++;
         }
         else {
+            //run the binary search to find the position to place the elem
             int placement = bSearch(0, count-1, elem);
 
             if(placement < count) {
+                //shifting all the element one place forward from the placement position
                 for(int i = count-1; i >= placement; i--) {
                     list[i+1] = list[i];
                 }
             }
-
+            //add the elem in the list
             list[placement] = elem;
             count++;
         }
@@ -45,7 +54,10 @@ public class SortedListImpl<E> implements SortedList {
 
     public int bSearch(int min, int max, Comparable elem)
     {
+        //in case if the max+min goes over the limits
+        //this is the safer version to find the mid point
         int midpoint = min + ((max - min) / 2);
+        //checking if the min is smaller the max
         if (min < max)
         {
             int comp = elem.compareTo(list[midpoint]);
@@ -77,11 +89,14 @@ public class SortedListImpl<E> implements SortedList {
         current = 0;
 
         while(i < count && j < arr.length){
-
-            if(list[i].compareTo(arr[j]) == -1){
+            //checking the element i from list is "smaller" than the j from arr.
+            if(list[i].compareTo(arr[j]) < 0){
+                // if elem i from list is "smaller" than the elem j from arr
+                // add elem i to the newList
                 newList[current] = list[i];
                 i++;
             }else{
+                //otherwise add elem j from arr.
                 newList[current] = arr[j];
                 j++;
             }
@@ -89,12 +104,16 @@ public class SortedListImpl<E> implements SortedList {
         }
 
         while(i < count){
+            // if there are more elem left from list
+            // add them to the newList
             newList[current] = list[i];
             i++;
             current++;
         }
 
         while(j < arr.length){
+            // if there are more elem left from arr
+            // add them to the newList
             newList[current] = arr[j];
             j++;
             current++;
@@ -104,11 +123,13 @@ public class SortedListImpl<E> implements SortedList {
     }
 
     @Override
+    //getting the object in the ix position of the list
     public Comparable get(int ix) {
         return list[ix];
     }
 
     @Override
+    // return the first index.
     public int firstIndex(Comparable elem) {
         return bSearch(0, count-1, elem);
     }
@@ -142,6 +163,7 @@ public class SortedListImpl<E> implements SortedList {
     }
 
     @Override
+    //return true if we find elem in the list.
     public boolean contains(Comparable elem) {
        return list[bSearch(0, count-1, elem)] == elem;
     }
