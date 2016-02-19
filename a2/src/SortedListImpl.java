@@ -1,7 +1,7 @@
 /**
  * Created by G05 on 10/02/16.
  */
-public class SortedListImpl<E> implements SortedList {
+public class SortedListImpl<E extends Comparable<E>> implements SortedList {
 
     public Comparable[] list;
     //variable to keep track of how many elements the list actually has.
@@ -67,6 +67,9 @@ public class SortedListImpl<E> implements SortedList {
             }
             else if(comp > 0) {// element is larger than midpoint
                 return bSearch(midpoint + 1, max, elem);//Search above the midpoint
+            }
+            else if(comp == 0 && elem.compareTo(list[midpoint - 1]) == 0 && !(midpoint < 0)){
+                return bSearch(min, midpoint - 1, elem);
             }
             else { // element is found
                 return midpoint;
