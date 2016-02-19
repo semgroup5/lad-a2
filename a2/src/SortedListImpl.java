@@ -68,7 +68,7 @@ public class SortedListImpl<E extends Comparable<E>> implements SortedList {
             else if(comp > 0) {// element is larger than midpoint
                 return bSearch(midpoint + 1, max, elem);//Search above the midpoint
             }
-            else if(comp == 0 && elem.compareTo(list[midpoint - 1]) == 0 && !(midpoint < 0)){
+            else if(comp == 0 && !((midpoint-1) < 0) && elem.compareTo(list[midpoint - 1]) == 0 ){
                 return bSearch(min, midpoint - 1, elem);
             }
             else { // element is found
