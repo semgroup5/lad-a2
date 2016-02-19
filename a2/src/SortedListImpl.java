@@ -1,9 +1,9 @@
 /**
  * Created by G05 on 10/02/16.
  */
-public class SortedListImpl<E extends Comparable<E>> implements SortedList {
+public class SortedListImpl<E extends Comparable<E>> implements SortedList<E> {
 
-    public Comparable[] list;
+    public E[] list;
     //variable to keep track of how many elements the list actually has.
     public int count;
 
@@ -11,20 +11,20 @@ public class SortedListImpl<E extends Comparable<E>> implements SortedList {
     public SortedListImpl() {
         super();
         //Creating a new comparable list with 5 objects
-        list = new Comparable[5];
+        list = (E[]) new Comparable[5];
         //Assign the count from 0.
         count = 0;
     }
 
     @Override
     //
-    public void add(Comparable elem) {
+    public void add(E elem) {
         //checking if the list will go over the limits of the old list
         if(count + 1 > list.length)
         {
-            Comparable[] oldList = list;
+            E[] oldList = list;
             //double the length from the old list and make a new list
-            list = new Comparable[oldList.length * 2];
+            list = (E[]) new Comparable[oldList.length * 2];
             //adding the objects in the old list to the new list
             for(int i = 0; i < count; i++)
             {
@@ -39,7 +39,7 @@ public class SortedListImpl<E extends Comparable<E>> implements SortedList {
         }
         else {
             //run the binary search to find the position to place the elem
-            int placement = bSearch(0, count-1, elem);
+            int placement = bSearch(0, count-1, elem, false);
 
             if(placement < count) {
                 //shifting all the element one place forward from the placement position
@@ -53,7 +53,7 @@ public class SortedListImpl<E extends Comparable<E>> implements SortedList {
         }
     }
 
-    public int bSearch(int min, int max, Comparable elem)
+    public int bSearch(int min, int max, E elem, boolean findLast)
     {
         //in case if the max+min goes over the limits
         //this is the safer version to find the mid point
@@ -63,31 +63,51 @@ public class SortedListImpl<E extends Comparable<E>> implements SortedList {
         {
             int comp = elem.compareTo(list[midpoint]);
             if(comp < 0) {//element is smaller than midpoint
-                return bSearch(min, midpoint - 1, elem);//Search below the midpoint
+                return bSearch(min, midpoint - 1, elem, findLast);//Search below the midpoint
             }
             else if(comp > 0) {// element is larger than midpoint
-                return bSearch(midpoint + 1, max, elem);//Search above the midpoint
-            }
-            else if(comp == 0 && !((midpoint-1) < 0) && elem.compareTo(list[midpoint - 1]) == 0 ){
-                return bSearch(min, midpoint - 1, elem);
+                return bSearch(midpoint + 1, max, elem, findLast);//Search above the midpoint
             }
             else { // element is found
+                if (!findLast && (midpoint > 0 && elem.compareTo(list[midpoint - 1]) == 0)) {
+                    return bSearch(min, midpoint - 1, elem, false);
+                } else if (findLast) {
+                    if (midpoint < count && elem.compareTo(list[midpoint + 1]) == 0) {
+                        return bSearch(midpoint + 1, max, elem, true);
+                    }
+                }
+
                 return midpoint;
             }
         }
         else
         {
+
+
             if(elem.compareTo(list[midpoint]) > 0) //if element is larger than min
+            {
+                if(findLast)
+                {
+                    return min;
+                }
+
                 return min+1; //prevents error when appending onto the array
+            }
+
+            if(findLast &&(min == 0 && elem.compareTo(list[0]) < 0))
+            {
+                return -1;
+            }
+
             return min;
 
         }
     }
 
     @Override
-    public void addSortedArray(Comparable[] arr) {
+    public void addSortedArray(E[] arr) {
         int size = this.list.length + arr.length;
-        Comparable[] newList = new Comparable[size];
+        E[] newList = (E[])new Comparable[size];
         int i, j, current;
         i = 0;
         j = 0;
@@ -129,54 +149,38 @@ public class SortedListImpl<E extends Comparable<E>> implements SortedList {
 
     @Override
     //getting the object in the ix position of the list
-    public Comparable get(int ix) {
+    public E get(int ix) {
         return list[ix];
     }
 
     @Override
     // return the first index.
-    public int firstIndex(Comparable elem) {
-        return bSearch(0, count-1, elem);
+    public int firstIndex(E elem) {
+        return bSearch(0, count-1, elem, false);
+
     }
 
     @Override
-    public int lastIndex(Comparable elem) {
-       int first = firstIndex(elem);
-        if (first == count){
-            // if the index of the search result is equal to count(there is no larger element in the array)
-            // return the last index which contain an object
-            return count - 1;
-        } else if (elem != list[first] ) {
-            return first - 1;
-            // if there are more than one elem which are equal to the new elem
-            // loop until it finds the last index of the same elem
-        } else if (elem.compareTo(list[first]) == 0){
-            while (elem == list[first+1] && first+1 < count ) {
-                first++;
-            }
-
-        }
-        return first;
+    public int lastIndex(E elem) {
+       return bSearch(0, count-1, elem, true);
     }
 
     @Override
     //return true if we find elem in the list.
-    public boolean contains(Comparable elem) {
-       return list[bSearch(0, count-1, elem)] == elem;
+    public boolean contains(E elem) {
+       return list[bSearch(0, count-1, elem, false)] == elem;
     }
 
     @Override
-    public int countBetween(Comparable lo, Comparable hi) {
-        int c = 0;
+    public int countBetween(E lo, E hi) {
         int first = firstIndex(lo);
         int second = firstIndex(hi);
         if (first == second){
             second = lastIndex(hi);
             //due to it being inclusive: "The number of elements x such that lo <= x <= hi" we add +1
-            c = second - first +1;
-            return c;
+            return second - first + 1;
         }
-        else return c = second - first;
+        else return second - first;
 
     }
 
