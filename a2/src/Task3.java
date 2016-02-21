@@ -39,10 +39,10 @@ public class Task3 {
     }
 
 	public static void main(String[] args) {
-
+            int size = 10000;
         for (int j = 0; j < 40; j++) {
 
-            int[] a = new int[(int) (Math.random()*10001+20001)];
+            int[] a = new int[size];
 
             for (int i = 0; i< a.length; i++){
                 a[i]= (int) (Math.random()*1000000000);
@@ -50,6 +50,7 @@ public class Task3 {
             int [] b = a.clone();
             insertion(a);
             sort(b);
+            size += 1000;
         }
 
 	}
